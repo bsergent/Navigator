@@ -31,10 +31,11 @@ public class Navigator extends JavaPlugin {
     // TODO Clone waypoints
     // TODO Point to bed by default
     // TODO Rename waypoint command option
+    // TODO Option to teleport to the waypoints
     
     @Override
     public void onEnable() {
-        getLogger().log(Level.INFO, "Navigator v{0} enabled.", version);
+        getLogger().log(Level.INFO, "Crafty Navigator v{0} enabled.", version);
         getConfig().options().copyDefaults(true);
         saveConfig();
         
@@ -72,7 +73,7 @@ public class Navigator extends JavaPlugin {
     
     @Override
     public void onDisable() {
-        getLogger().log(Level.INFO, "Navigator v{0} disabled.", version);
+        getLogger().log(Level.INFO, "Crafty Navigator v{0} disabled.", version);
     }
 
     @Override
@@ -81,7 +82,7 @@ public class Navigator extends JavaPlugin {
             
             if (args.length == 0 || (args.length < 2 && args[0].equals("1"))) {
                 sender.sendMessage(new String[] {
-                    ChatColor.GOLD+""+ChatColor.BOLD+"Navigator - Instructions",
+                    ChatColor.GOLD+""+ChatColor.BOLD+"Crafty Navigator - Instructions",
                     ChatColor.GOLD+"Waypoint Crafting Recipe:",
                     ChatColor.WHITE+"  1x paper, 1x redstone"+(getConfig().getBoolean("require_enderpearl_for_crafting", true)?", 1x ender pearl":""),
                     ChatColor.GOLD+"Setting a Waypoint:",
@@ -95,7 +96,7 @@ public class Navigator extends JavaPlugin {
             }
             
             if (args.length >= 1 && args[0].equals("version")) {
-                sender.sendMessage(new String[] {ChatColor.GOLD+"Navigator v"+version, "Go to http://dev.bukkit.org/bukkit-plugins/navigator/ for updates."});
+                sender.sendMessage(new String[] {ChatColor.GOLD+"Crafty Navigator v"+version, "Go to http://dev.bukkit.org/bukkit-plugins/crafty-navigator/ for updates."});
             }
         }
         

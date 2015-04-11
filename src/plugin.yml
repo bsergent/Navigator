@@ -1,4 +1,4 @@
-name: Navigator
+name: Crafty Navigator
 description: Navigate using a compass and paper waypoints, no need for coords
 version: 0.0.4
 author: Ben Sergent V
@@ -7,19 +7,19 @@ main: com.challengercity.plugins.navigator.Navigator
 database: false
 
 permissions:
-  navigator.user.*:
+  craftynavigator.user.*:
     description: Use Navigator
     default: true
     children:
-      navigator.user.setcompass: true
-      navigator.user.waypoint.*:
+      craftynavigator.user.setcompass: true
+      craftynavigator.user.waypoint.*:
           description: Waypoint interfaces
           children:
-            navigator.user.waypoint.set: true
-            navigator.user.waypoint.clone: true
-            navigator.user.waypoint.craft: true
+            craftynavigator.user.waypoint.set: true
+            craftynavigator.user.waypoint.clone: true
+            craftynavigator.user.waypoint.craft: true
       
 commands:
   navigator:
     description: Shows usage information for Navigator
-    aliases: [nav, compass]
+    aliases: [nav, compass, cnav]
