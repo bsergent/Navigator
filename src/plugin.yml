@@ -1,9 +1,9 @@
 name: Crafty Navigator
 description: Navigate using a compass and paper waypoints, no need for coords
-version: 0.0.4
+version: 0.0.6
 author: Ben Sergent V
 
-main: com.challengercity.plugins.navigator.Navigator
+main: com.challengercity.plugins.craftynavigator.CraftyNavigator
 database: false
 
 permissions:

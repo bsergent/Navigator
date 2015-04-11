@@ -1,5 +1,5 @@
 
-package com.challengercity.plugins.navigator;
+package com.challengercity.plugins.craftynavigator;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -21,9 +21,9 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  * @author Ben Sergent V <bsergentv@gmail.com>
  */
-public class Navigator extends JavaPlugin {
+public class CraftyNavigator extends JavaPlugin {
     
-    private final String version = "0.0.4";
+    private final String version = "0.0.6";
     private String prefix = ChatColor.WHITE+"["+ChatColor.GOLD+"Nav"+ChatColor.WHITE+"]";
     private org.bukkit.configuration.file.FileConfiguration navTargetsConfig = null;
     private java.io.File navTargetsFile = null;
