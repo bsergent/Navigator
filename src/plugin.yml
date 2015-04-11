@@ -1,6 +1,6 @@
 name: Navigator
 description: Navigate using a compass and paper waypoints, no need for coords
-version: 0.0.3
+version: 0.0.4
 author: Ben Sergent V
 
 main: com.challengercity.plugins.navigator.Navigator
@@ -12,8 +12,12 @@ permissions:
     default: true
     children:
       navigator.user.setcompass: true
-      navigator.user.setwaypoint: true
-      navigator.user.craft.waypoint: true
+      navigator.user.waypoint.*:
+          description: Waypoint interfaces
+          children:
+            navigator.user.waypoint.set: true
+            navigator.user.waypoint.clone: true
+            navigator.user.waypoint.craft: true
       
 commands:
   navigator:

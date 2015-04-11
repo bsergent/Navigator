@@ -1,4 +1,4 @@
-let_players_spawn_waypoints: false
-require_enderpearl_for_crafting: true
 prefix: "&f[&6Nav&f]"
-point_to_bed_by_default: false
+require_enderpearl_for_crafting: true
+#let_players_spawn_waypoints: false
+#point_to_bed_by_default: false

@@ -3,15 +3,14 @@ package com.challengercity.plugins.navigator;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.event.Event;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
@@ -24,7 +23,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class Navigator extends JavaPlugin {
     
-    private final String version = "0.0.3";
+    private final String version = "0.0.4";
     private String prefix = ChatColor.WHITE+"["+ChatColor.GOLD+"Nav"+ChatColor.WHITE+"]";
     private org.bukkit.configuration.file.FileConfiguration navTargetsConfig = null;
     private java.io.File navTargetsFile = null;
@@ -53,7 +52,7 @@ public class Navigator extends JavaPlugin {
         this.getServer().addRecipe(waypointRecipe);
         
         if (getConfig().getString("prefix") != null) {
-            prefix = getConfig().getString("prefix");
+            prefix = getConfig().getString("prefix").replaceAll("&", "§");
         }
         
         if (navTargetsFile == null) {
@@ -133,6 +132,11 @@ public class Navigator extends JavaPlugin {
                         ItemMeta im = paperStack.getItemMeta();
                         List<String> lore = im.getLore();
                         if (lore.get(0).matches("^(.*)+x:[-0-9]+, z:[-0-9]+(.*)+$")) {
+                            if (!e.getPlayer().hasPermission("navigator.user.setcompass")) {
+                                e.getPlayer().sendMessage(prefix+ChatColor.WHITE+" You do not have permission to navigate to a waypoint.");
+                                return;
+                            }
+                            
                             String name = "Waypoint";
                             if (im.hasDisplayName()) {
                                 name = im.getDisplayName().replaceFirst("§r|§o", "");
@@ -158,6 +162,11 @@ public class Navigator extends JavaPlugin {
                                 getLogger().log(Level.INFO, "Failed to save {0}''s new navigation destination.", e.getPlayer().getName());
                             }
                         } else if (lore.get(0).contains("Blank") || lore.get(0).contains("blank")) {
+                            if (!e.getPlayer().hasPermission("navigator.user.waypoint.set")) {
+                                e.getPlayer().sendMessage(prefix+ChatColor.WHITE+" You do not have permission to set a waypoint.");
+                                return;
+                            }
+                            
                             int x = e.getPlayer().getLocation().getBlockX();
                             int z = e.getPlayer().getLocation().getBlockZ();
                             
@@ -168,12 +177,31 @@ public class Navigator extends JavaPlugin {
                             im.setLore(lore);
                             paperStack.setItemMeta(im);
                             
-                            e.getPlayer().sendMessage(prefix+ChatColor.WHITE+" New waypoint set to "+x+", "+z);
+                            e.getPlayer().sendMessage(prefix+ChatColor.WHITE+" New waypoint set to "+x+", "+z+".");
                             e.getPlayer().sendMessage(prefix+ChatColor.WHITE+" You can rename this waypoint in an anvil.");
                         }
                     }
                 }
             }
+        }
+        
+        @org.bukkit.event.EventHandler(priority = org.bukkit.event.EventPriority.NORMAL)
+        public void onCraft(org.bukkit.event.inventory.CraftItemEvent e) {
+            if (e.getRecipe().getResult().hasItemMeta() && e.getRecipe().getResult().getItemMeta().hasLore() && e.getRecipe().getResult().getItemMeta().hasDisplayName() && e.getRecipe().getResult().getItemMeta().getDisplayName().contains("Waypoint")) {
+                if (!e.getWhoClicked().hasPermission("navigator.user.waypoint.craft")) {
+                    e.getWhoClicked().sendMessage(prefix+ChatColor.WHITE+"You do not have permission to craft waypoints.");
+                    e.setResult(Event.Result.DENY);
+                }
+            }
+            /*if (e.getRecipe().getResult().hasItemMeta() && e.getRecipe().getResult().getItemMeta().hasLore() && e.getRecipe().getResult().getItemMeta().getDisplayName().contains(stationaryMeta.getDisplayName())) {
+                ItemStack result = e.getRecipe().getResult();
+                ItemMeta im = result.getItemMeta();
+                List<String> lore = im.getLore();
+                lore.add("§r§7Code: "+UUID.randomUUID());
+                im.setLore(lore);
+                result.setItemMeta(im);
+                e.getInventory().setResult(result);
+            }*/
         }
         
         @org.bukkit.event.EventHandler(priority = org.bukkit.event.EventPriority.MONITOR)
