@@ -1,6 +1,6 @@
 name: Navigator
 description: Navigate using a compass and paper waypoints, no need for coords
-version: 0.0.1
+version: 0.0.2
 author: Ben Sergent V
 
 main: com.challengercity.plugins.navigator.Navigator
