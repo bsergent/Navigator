@@ -1,2 +1,4 @@
 let_players_spawn_waypoints: false
 require_enderpearl_for_crafting: true
+prefix: "&f[&6Nav&f]"
+point_to_bed_by_default: false
